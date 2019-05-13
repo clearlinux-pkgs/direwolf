@@ -4,7 +4,7 @@
 #
 Name     : direwolf
 Version  : 1.5
-Release  : 2
+Release  : 3
 URL      : https://github.com/wb2osz/direwolf/archive/1.5.tar.gz
 Source0  : https://github.com/wb2osz/direwolf/archive/1.5.tar.gz
 Summary  : Soundcard based AX.25 TNC
@@ -31,7 +31,6 @@ Group: Binaries
 Requires: direwolf-data = %{version}-%{release}
 Requires: direwolf-config = %{version}-%{release}
 Requires: direwolf-license = %{version}-%{release}
-Requires: direwolf-man = %{version}-%{release}
 
 %description bin
 bin components for the direwolf package.
@@ -87,11 +86,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1541032625
+export SOURCE_DATE_EPOCH=1557785633
+export GCC_IGNORE_WERROR=1
+export LDFLAGS="${LDFLAGS} -fno-lto"
 make  %{?_smp_mflags}
 
+
 %install
-export SOURCE_DATE_EPOCH=1541032625
+export SOURCE_DATE_EPOCH=1557785633
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/direwolf
 cp LICENSE-dire-wolf.txt %{buildroot}/usr/share/package-licenses/direwolf/LICENSE-dire-wolf.txt

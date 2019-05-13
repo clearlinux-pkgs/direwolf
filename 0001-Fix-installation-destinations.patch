@@ -1,14 +1,14 @@
-From 7e0141d388422797ceab7b2c06620c07d3913844 Mon Sep 17 00:00:00 2001
+From 0254c08501d32c8f225a814995f20bbb0f048716 Mon Sep 17 00:00:00 2001
 From: "Brett T. Warden" <brett.t.warden@intel.com>
 Date: Wed, 31 Oct 2018 16:47:20 -0700
 Subject: [PATCH] Fix installation destinations
 
 ---
- Makefile.linux | 151 +++++++++++++++++++++++++------------------------
- 1 file changed, 76 insertions(+), 75 deletions(-)
+ Makefile.linux | 152 ++++++++++++++++++++++++-------------------------
+ 1 file changed, 76 insertions(+), 76 deletions(-)
 
 diff --git a/Makefile.linux b/Makefile.linux
-index 5010833..84a6670 100644
+index 5010833..c49240c 100644
 --- a/Makefile.linux
 +++ b/Makefile.linux
 @@ -535,12 +535,13 @@ direwolf.conf : generic.conf
@@ -27,7 +27,7 @@ index 5010833..84a6670 100644
  
  
  
-@@ -560,22 +561,22 @@ direwolf.desktop :
+@@ -560,22 +561,21 @@ direwolf.desktop :
  	@echo '[Desktop Entry]' > $@
  	@echo 'Type=Application' >> $@
  ifneq ($(wildcard /usr/bin/lxterminal),)
@@ -43,8 +43,8 @@ index 5010833..84a6670 100644
  	@echo 'Name=Dire Wolf' >> $@
  	@echo 'Comment=APRS Soundcard TNC' >> $@
 -	@echo 'Icon=$(DESTDIR)/share/direwolf/pixmaps/dw-icon.png' >> $@
+-	@echo "Path=$(HOME)" >> $@
 +	@echo 'Icon=$(INSTALLPATH)/share/direwolf/pixmaps/dw-icon.png' >> $@
- 	@echo "Path=$(HOME)" >> $@
  	@echo '#Terminal=true' >> $@
  	@echo 'Categories=HamRadio' >> $@
  	@echo 'Keywords=Ham Radio;APRS;Soundcard TNC;KISS;AGWPE;AX.25' >> $@
@@ -55,7 +55,7 @@ index 5010833..84a6670 100644
  # Needs to be run as root or with sudo.
  
  
-@@ -585,102 +586,102 @@ install : $(APPS) direwolf.conf tocalls.txt symbols-new.txt symbolsX.txt dw-icon
+@@ -585,102 +585,102 @@ install : $(APPS) direwolf.conf tocalls.txt symbols-new.txt symbolsX.txt dw-icon
  # Applications, not installed with package manager, normally go in /usr/local/bin.
  # /usr/bin is used instead when installing from .DEB or .RPM package.
  #
@@ -224,7 +224,7 @@ index 5010833..84a6670 100644
  #
  	@echo " "
  	@echo "If this is your first install, not an upgrade, type this to put a copy"
-@@ -693,7 +694,7 @@ install : $(APPS) direwolf.conf tocalls.txt symbols-new.txt symbolsX.txt dw-icon
+@@ -693,7 +693,7 @@ install : $(APPS) direwolf.conf tocalls.txt symbols-new.txt symbolsX.txt dw-icon
  # Put sample configuration & startup files in home directory.
  # This step would be done as ordinary user.
  # Some people like to put the direwolf config file in /etc/ax25.
@@ -233,7 +233,7 @@ index 5010833..84a6670 100644
  
  # The Raspberry Pi has ~/Desktop but Ubuntu does not.
  
-@@ -724,7 +725,7 @@ endif
+@@ -724,7 +724,7 @@ endif
  
  .PHONY: install-rpi
  install-rpi : 
@@ -243,5 +243,5 @@ index 5010833..84a6670 100644
  
  
 -- 
-2.19.1
+2.21.0
 
