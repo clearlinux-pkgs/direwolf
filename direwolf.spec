@@ -4,7 +4,7 @@
 #
 Name     : direwolf
 Version  : 1.6
-Release  : 5
+Release  : 6
 URL      : https://github.com/wb2osz/direwolf/archive/1.6/direwolf-1.6.tar.gz
 Source0  : https://github.com/wb2osz/direwolf/archive/1.6/direwolf-1.6.tar.gz
 Summary  : Sound Card-based AX.25 TNC
@@ -84,7 +84,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1603929826
+export SOURCE_DATE_EPOCH=1612217098
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -104,7 +104,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 cd clr-build; make test
 
 %install
-export SOURCE_DATE_EPOCH=1603929826
+export SOURCE_DATE_EPOCH=1612217098
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/direwolf
 cp %{_builddir}/direwolf-1.6/LICENSE %{buildroot}/usr/share/package-licenses/direwolf/0f0e2ead1017d225cc9c0c356708088dfa21825d

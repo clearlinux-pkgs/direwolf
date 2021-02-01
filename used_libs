@@ -1,6 +1,6 @@
 libasound.so.2
 libc.so.6
-libhamlib.so.2
+libhamlib.so.4
 libm.so.6
 libmvec.so.1
 libpthread.so.0
