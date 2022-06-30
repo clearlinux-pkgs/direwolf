@@ -4,7 +4,7 @@
 #
 Name     : direwolf
 Version  : 1.6
-Release  : 10
+Release  : 11
 URL      : https://github.com/wb2osz/direwolf/archive/1.6/direwolf-1.6.tar.gz
 Source0  : https://github.com/wb2osz/direwolf/archive/1.6/direwolf-1.6.tar.gz
 Summary  : Sound Card-based AX.25 TNC
@@ -94,7 +94,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1634756135
+export SOURCE_DATE_EPOCH=1656568195
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -108,10 +108,10 @@ popd
 mkdir -p clr-build-avx2
 pushd clr-build-avx2
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -O3 -Wl,-z,x86-64-v3 -fno-lto -march=x86-64-v3 -mtune=skylake "
-export FCFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -fno-lto -march=x86-64-v3 -mtune=skylake "
-export FFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -fno-lto -march=x86-64-v3 -mtune=skylake "
-export CXXFLAGS="$CXXFLAGS -O3 -Wl,-z,x86-64-v3 -fno-lto -march=x86-64-v3 -mtune=skylake "
+export CFLAGS="$CFLAGS -O3 -Wl,-z,x86-64-v3 -fno-lto -march=x86-64-v3 -msse2avx -mtune=skylake "
+export FCFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -fno-lto -march=x86-64-v3 -msse2avx -mtune=skylake "
+export FFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -fno-lto -march=x86-64-v3 -msse2avx -mtune=skylake "
+export CXXFLAGS="$CXXFLAGS -O3 -Wl,-z,x86-64-v3 -fno-lto -march=x86-64-v3 -msse2avx -mtune=skylake "
 export CFLAGS="$CFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
 export CXXFLAGS="$CXXFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
 export FFLAGS="$FFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
@@ -130,7 +130,7 @@ cd ../clr-build-avx2;
 make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1634756135
+export SOURCE_DATE_EPOCH=1656568195
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/direwolf
 cp %{_builddir}/direwolf-1.6/LICENSE %{buildroot}/usr/share/package-licenses/direwolf/0f0e2ead1017d225cc9c0c356708088dfa21825d
@@ -141,7 +141,7 @@ popd
 pushd clr-build
 %make_install
 popd
-/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
