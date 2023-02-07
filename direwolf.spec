@@ -4,7 +4,7 @@
 #
 Name     : direwolf
 Version  : 1.7.dev.a
-Release  : 17
+Release  : 18
 URL      : https://github.com/wb2osz/direwolf/archive/1.7-dev-A/direwolf-1.7-dev-A.tar.gz
 Source0  : https://github.com/wb2osz/direwolf/archive/1.7-dev-A/direwolf-1.7-dev-A.tar.gz
 Summary  : Sound Card-based AX.25 TNC
@@ -20,12 +20,15 @@ BuildRequires : buildreq-cmake
 BuildRequires : git
 BuildRequires : glibc-dev
 BuildRequires : pkg-config
+BuildRequires : pkgconfig(avahi-core)
 BuildRequires : pkgconfig(hamlib)
+BuildRequires : pkgconfig(libgps)
 BuildRequires : pkgconfig(libudev)
 BuildRequires : pkgconfig(portaudio-2.0)
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
+Patch1: backport-Support-newer-gpsd.patch
 
 %description
 Dire Wolf is a modern software replacement for the old 1980's style
@@ -91,13 +94,14 @@ man components for the direwolf package.
 %prep
 %setup -q -n direwolf-1.7-dev-A
 cd %{_builddir}/direwolf-1.7-dev-A
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1675800173
+export SOURCE_DATE_EPOCH=1675801592
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -133,7 +137,7 @@ cd ../clr-build-avx2;
 make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1675800173
+export SOURCE_DATE_EPOCH=1675801592
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/direwolf
 cp %{_builddir}/direwolf-1.7-dev-A/LICENSE %{buildroot}/usr/share/package-licenses/direwolf/0f0e2ead1017d225cc9c0c356708088dfa21825d || :

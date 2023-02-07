@@ -1,5 +1,8 @@
 libasound.so.2
+libavahi-client.so.3
+libavahi-common.so.3
 libc.so.6
+libgps.so.30
 libhamlib.so.4
 libm.so.6
 libmvec.so.1

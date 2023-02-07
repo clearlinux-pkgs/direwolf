@@ -1,0 +1,25 @@
+From a1c7f42616a736761526efae57de4377ec451704 Mon Sep 17 00:00:00 2001
+From: "Brett T. Warden" <brett.t.warden@intel.com>
+Date: Tue, 7 Feb 2023 11:58:33 -0800
+Subject: [PATCH] Support newer gpsd
+
+---
+ src/dwgpsd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/dwgpsd.c b/src/dwgpsd.c
+index 70b650bdae0d..822afcf100ca 100644
+--- a/src/dwgpsd.c
++++ b/src/dwgpsd.c
+@@ -60,7 +60,7 @@
+ // An incompatibility was introduced with version 7
+ // and again with 9 and again with 10.
+ 
+-#if GPSD_API_MAJOR_VERSION < 5 || GPSD_API_MAJOR_VERSION > 11
++#if GPSD_API_MAJOR_VERSION < 5 || GPSD_API_MAJOR_VERSION > 14
+ #error libgps API version might be incompatible.
+ #endif
+ 
+-- 
+2.39.1
+
