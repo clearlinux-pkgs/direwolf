@@ -4,10 +4,10 @@
 # Using build pattern: cmake
 #
 Name     : direwolf
-Version  : 1.7.dev.a
-Release  : 20
-URL      : https://github.com/wb2osz/direwolf/archive/1.7-dev-A/direwolf-1.7-dev-A.tar.gz
-Source0  : https://github.com/wb2osz/direwolf/archive/1.7-dev-A/direwolf-1.7-dev-A.tar.gz
+Version  : a87b72e040e3255d484900c804a7cdb57399eb88
+Release  : 21
+URL      : https://github.com/wb2osz/direwolf/archive/a87b72e040e3255d484900c804a7cdb57399eb88/direwolf-a87b72e040e3255d484900c804a7cdb57399eb88.tar.gz
+Source0  : https://github.com/wb2osz/direwolf/archive/a87b72e040e3255d484900c804a7cdb57399eb88/direwolf-a87b72e040e3255d484900c804a7cdb57399eb88.tar.gz
 Summary  : Sound Card-based AX.25 TNC
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0 GPL-2.0+ GPL-3.0 ISC
@@ -29,7 +29,6 @@ BuildRequires : pkgconfig(portaudio-2.0)
 %define __strip /bin/true
 %define debug_package %{nil}
 Patch1: backport-Fix-cmake-error-on-external-misc-library.patch
-Patch2: backport-Support-newer-gpsd.patch
 
 %description
 Dire Wolf is a modern software replacement for the old 1980's style
@@ -84,17 +83,16 @@ man components for the direwolf package.
 
 
 %prep
-%setup -q -n direwolf-1.7-dev-A
-cd %{_builddir}/direwolf-1.7-dev-A
+%setup -q -n direwolf-a87b72e040e3255d484900c804a7cdb57399eb88
+cd %{_builddir}/direwolf-a87b72e040e3255d484900c804a7cdb57399eb88
 %patch -P 1 -p1
-%patch -P 2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1692029837
+export SOURCE_DATE_EPOCH=1692030067
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -130,14 +128,14 @@ cd ../clr-build-avx2;
 make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1692029837
+export SOURCE_DATE_EPOCH=1692030067
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/direwolf
-cp %{_builddir}/direwolf-1.7-dev-A/LICENSE %{buildroot}/usr/share/package-licenses/direwolf/0f0e2ead1017d225cc9c0c356708088dfa21825d || :
-cp %{_builddir}/direwolf-1.7-dev-A/external/hidapi/LICENSE-bsd.txt %{buildroot}/usr/share/package-licenses/direwolf/7dde42b4c6fdafae722d8d07556b6d9dba4d2963 || :
-cp %{_builddir}/direwolf-1.7-dev-A/external/hidapi/LICENSE-gpl3.txt %{buildroot}/usr/share/package-licenses/direwolf/8624bcdae55baeef00cd11d5dfcfa60f68710a02 || :
-cp %{_builddir}/direwolf-1.7-dev-A/external/hidapi/LICENSE-orig.txt %{buildroot}/usr/share/package-licenses/direwolf/66047dbcf3fd689c99472266f5ad141c53d6f2c6 || :
-cp %{_builddir}/direwolf-1.7-dev-A/external/regex/COPYING %{buildroot}/usr/share/package-licenses/direwolf/0b184ad51ba2a79e85d2288d5fcf8a1ea0481ea4 || :
+cp %{_builddir}/direwolf-%{version}/LICENSE %{buildroot}/usr/share/package-licenses/direwolf/0f0e2ead1017d225cc9c0c356708088dfa21825d || :
+cp %{_builddir}/direwolf-%{version}/external/hidapi/LICENSE-bsd.txt %{buildroot}/usr/share/package-licenses/direwolf/7dde42b4c6fdafae722d8d07556b6d9dba4d2963 || :
+cp %{_builddir}/direwolf-%{version}/external/hidapi/LICENSE-gpl3.txt %{buildroot}/usr/share/package-licenses/direwolf/8624bcdae55baeef00cd11d5dfcfa60f68710a02 || :
+cp %{_builddir}/direwolf-%{version}/external/hidapi/LICENSE-orig.txt %{buildroot}/usr/share/package-licenses/direwolf/66047dbcf3fd689c99472266f5ad141c53d6f2c6 || :
+cp %{_builddir}/direwolf-%{version}/external/regex/COPYING %{buildroot}/usr/share/package-licenses/direwolf/0b184ad51ba2a79e85d2288d5fcf8a1ea0481ea4 || :
 pushd clr-build-avx2
 %make_install_v3  || :
 popd
@@ -162,6 +160,7 @@ popd
 /V3/usr/bin/ll2utm
 /V3/usr/bin/log2gpx
 /V3/usr/bin/text2tt
+/V3/usr/bin/tnctest
 /V3/usr/bin/tt2text
 /V3/usr/bin/ttcalc
 /V3/usr/bin/utm2ll
@@ -186,6 +185,7 @@ popd
 /usr/bin/telem-unit.pl
 /usr/bin/telem-volts.py
 /usr/bin/text2tt
+/usr/bin/tnctest
 /usr/bin/tt2text
 /usr/bin/ttcalc
 /usr/bin/utm2ll
