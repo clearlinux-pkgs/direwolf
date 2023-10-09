@@ -1,45 +1,40 @@
-From 760447b6e2795a760e9e45ff6f6f63729f83b8e9 Mon Sep 17 00:00:00 2001
-From: "Brett T. Warden" <brett.t.warden@intel.com>
-Date: Mon, 14 Aug 2023 09:05:00 -0700
-Subject: [PATCH] Fix cmake error on external misc library
+From ab834f338bdd0580def6a18a81dbf9cbf7e7f18e Mon Sep 17 00:00:00 2001
+From: wb2osz <wb2osz@comcast.net>
+Date: Mon, 25 Sep 2023 03:17:15 +0100
+Subject: [PATCH] Second attempt to fix build on Alpine Linux.  issues 150,
+ 319, 344.
 
-For Linux builds, if strlcpt and strlcat are already provided, cmake is
-given an empty list of sources to build for the "misc" library. Newer
-versions of cmake throw an error for this. In this case, we should just
-avoid building the library.
-
-Failure pattern:
-CMake Error at external/misc/CMakeLists.txt:35 (add_library):
-  No SOURCES given to target: misc
-CMake Generate step failed.  Build files cannot be regenerated correctly.
-
-Fixes #319
 ---
- external/misc/CMakeLists.txt | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ external/misc/CMakeLists.txt | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
 diff --git a/external/misc/CMakeLists.txt b/external/misc/CMakeLists.txt
-index 16125d0aa2c0..05efcc5e799e 100644
+index 16125d0a..685b89ad 100644
 --- a/external/misc/CMakeLists.txt
 +++ b/external/misc/CMakeLists.txt
-@@ -32,9 +32,14 @@ if(LINUX)
+@@ -32,9 +32,22 @@ if(LINUX)
        )
    endif()
  
 -  add_library(misc STATIC
 -    ${misc_SOURCES}
 -    )
-+  if ( "${misc_SOURCES}" )
++  # Add_library doesn't like to get an empty source file list.
++  # I tried several variations on this theme to test whether the list
++  # was not empty and was not successful in getting it to work
++  # on both Alpine and RPi.
++  #if("${misc_SOURCES}")
++  # This is less elegant and less maintainable but it works.
++
++  if ((NOT HAVE_STRLCPY) OR (NOT HAVE_STRLCAT))
 +    add_library(misc STATIC
 +      ${misc_SOURCES}
 +      )
 +  else()
-+    # Nothing to build
 +    set(MISC_LIBRARIES "" CACHE INTERNAL "")
 +  endif()
++
++
  
  elseif(WIN32 OR CYGWIN) # windows
  
--- 
-2.41.0
-
