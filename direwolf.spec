@@ -7,13 +7,14 @@
 #
 Name     : direwolf
 Version  : 1.7
-Release  : 24
+Release  : 25
 URL      : https://github.com/wb2osz/direwolf/archive/1.7/direwolf-1.7.tar.gz
 Source0  : https://github.com/wb2osz/direwolf/archive/1.7/direwolf-1.7.tar.gz
 Summary  : Sound Card-based AX.25 TNC
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0 GPL-2.0+ GPL-3.0 ISC
 Requires: direwolf-bin = %{version}-%{release}
+Requires: direwolf-config = %{version}-%{release}
 Requires: direwolf-data = %{version}-%{release}
 Requires: direwolf-license = %{version}-%{release}
 Requires: direwolf-man = %{version}-%{release}
@@ -44,10 +45,19 @@ others.
 Summary: bin components for the direwolf package.
 Group: Binaries
 Requires: direwolf-data = %{version}-%{release}
+Requires: direwolf-config = %{version}-%{release}
 Requires: direwolf-license = %{version}-%{release}
 
 %description bin
 bin components for the direwolf package.
+
+
+%package config
+Summary: config components for the direwolf package.
+Group: Default
+
+%description config
+config components for the direwolf package.
 
 
 %package data
@@ -95,7 +105,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1723577947
+export SOURCE_DATE_EPOCH=1723578329
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -158,7 +168,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1723577947
+export SOURCE_DATE_EPOCH=1723578329
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/direwolf
 cp %{_builddir}/direwolf-%{version}/LICENSE %{buildroot}/usr/share/package-licenses/direwolf/0f0e2ead1017d225cc9c0c356708088dfa21825d || :
@@ -177,6 +187,10 @@ GOAMD64=v2
 pushd clr-build
 %make_install
 popd
+## install_append content
+mkdir -p %{buildroot}/usr/lib
+mv %{buildroot}/etc/udev %{buildroot}/usr/lib/
+## install_append end
 /usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
@@ -224,6 +238,10 @@ popd
 /usr/bin/tt2text
 /usr/bin/ttcalc
 /usr/bin/utm2ll
+
+%files config
+%defattr(-,root,root,-)
+/usr/lib/udev/rules.d/99-direwolf-cmedia.rules
 
 %files data
 %defattr(-,root,root,-)
