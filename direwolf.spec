@@ -7,7 +7,7 @@
 #
 Name     : direwolf
 Version  : 1.7
-Release  : 25
+Release  : 26
 URL      : https://github.com/wb2osz/direwolf/archive/1.7/direwolf-1.7.tar.gz
 Source0  : https://github.com/wb2osz/direwolf/archive/1.7/direwolf-1.7.tar.gz
 Summary  : Sound Card-based AX.25 TNC
